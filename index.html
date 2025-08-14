@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>製品比較表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ページ全体の基本設定 */
+        body {
+            font-family: sans-serif;
+            margin: 0; /* スマホ表示のために余白を0に */
+            background-color: #f9f9f9;
+        }
+        .container {
+            padding: 15px; /* コンテンツ全体の余白 */
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5em; /* 見出しサイズを調整 */
+        }
+        
+        /* 表のデザイン */
+        table {
+            width: 100%; /* 横幅を100%に */
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* --- ここからがスマホ対応の核！ --- */
+        /* 画面の横幅が768px以下の時に適用されるCSS */
+        @media screen and (max-width: 768px) {
+            
+            /* PC用のヘッダーを非表示に */
+            thead {
+                display: none;
+            }
+
+            /* table, tbody, tr, tdをブロック要素として表示 */
+            table, tbody, tr, td {
+                display: block;
+                width: 100%;
+            }
+
+            /* 各行（tr）をカードのように見せる */
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+            }
+
+            /* tdの左側に、非表示にしたヘッダーのテキストを表示する */
+            td {
+                text-align: right; /* テキストを右寄せに */
+                position: relative;
+                padding-left: 50%; /* 左側にラベル用のスペースを確保 */
+            }
+
+            td::before {
+                content: attr(data-label); /* data-label属性の内容を表示 */
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                font-weight: bold;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>宿泊先 比較表</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>番号</th>
+                <th>価格</th>
+                <th>BBQの有無</th>
+                <th>場所、詳細</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="番号">①</td>
+                <td data-label="価格">￥38,850＋税・手数料（￥18,000）</td>
+                <td data-label="BBQの有無">なし</td>
+                <td data-label="場所、詳細">〒299-2402 千葉県, 南房総市, 富浦町豊岡 字坂ノ下897</td>
+                <td data-label="URL"><a href="https://share.google/fWC1PCEee3gvZSuuS" target="_blank">リンクを開く</a></td>
+            </tr>
+            <tr>
+                <td data-label="番号">②</td>
+                <td data-label="価格">47,712＋税・手数料（￥8,800）</td>
+                <td data-label="BBQの有無">あり</td>
+                <td data-label="場所、詳細">〒311-2212 茨城県, 鹿嶋市, 角折 1506-35</td>
+                <td data-label="URL"><a href="https://share.google/GKVRE0Gd9azwHmF2Z" target="_blank">リンクを開く</a></td>
+            </tr>
+            <tr>
+                <td data-label="番号">③</td>
+                <td data-label="価格">￥46,656 税・手数料込</td>
+                <td data-label="BBQの有無">あり（有料）</td>
+                <td data-label="場所、詳細">〒307-0001 茨城県, 結城市, 結城１６２−１ HOTEL(TEN)</td>
+                <td data-label="URL"><a href="https://www.booking.com/Share-8yd1RY" target="_blank">リンクを開く</a></td>
+            </tr>
+             <tr>
+                <td data-label="番号">④</td>
+                <td data-label="価格">￥62,400＋税・手数料（￥9,000）</td>
+                <td data-label="BBQの有無">なし</td>
+                <td data-label="場所、詳細">〒283-0114 千葉県, Kujukuri, 千葉県山武郡九十九里町真亀4908-207</td>
+                <td data-label="URL"><a href="https.www.booking.com/Share-7eelzxy" target="_blank">リンクを開く</a></td>
+            </tr>
+             <tr>
+                <td data-label="番号">⑤</td>
+                <td data-label="価格">￥55,500税・手数料込</td>
+                <td data-label="BBQの有無">あり（有料）</td>
+                <td data-label="場所、詳細">〒321-1261 栃木県, 日光市, 今市1078-4</td>
+                <td data-label="URL"><a href="https://www.booking.com/Share-3rY6LI" target="_blank">リンクを開く</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
