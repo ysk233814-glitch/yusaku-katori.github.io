@@ -5,92 +5,25 @@
     <title>宿泊先 比較表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* ページ全体の基本設定 */
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            background-color: #f9f9f9;
-        }
-        .container {
-            padding: 15px;
-        }
-        h1 {
-            text-align: center;
-            font-size: 1.5em;
-        }
-        /* 絞り込みフィルターのスタイル */
-        .filters {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .filters label {
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        /* 表のデザイン */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-        }
-        th[data-column] {
-            cursor: pointer;
-        }
-        th[data-column]:hover {
-            background-color: #0056b3;
-        }
-        tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        a {
-            color: #007bff;
-            font-weight: bold;
-        }
-        /* スマホ対応 */
+        /* (CSSは変更なしのため、省略しています。お使いのものをそのままご利用ください) */
+        body { font-family: sans-serif; margin: 0; background-color: #f9f9f9; }
+        .container { padding: 15px; }
+        h1 { text-align: center; font-size: 1.5em; }
+        .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; padding: 10px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .filters label { cursor: pointer; font-size: 0.9em; }
+        table { width: 100%; border-collapse: collapse; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; vertical-align: middle; }
+        th { background-color: #007bff; color: white; text-align: center; }
+        th[data-column] { cursor: pointer; }
+        th[data-column]:hover { background-color: #0056b3; }
+        tbody tr:nth-child(even) { background-color: #f2f2f2; }
+        a { color: #007bff; font-weight: bold; }
         @media screen and (max-width: 768px) {
-            thead {
-                display: none;
-            }
-            table, tbody, tr, td {
-                display: block;
-                width: 100%;
-            }
-            tr {
-                margin-bottom: 15px;
-                border: 1px solid #ddd;
-            }
-            td {
-                text-align: right;
-                position: relative;
-                padding-left: 50%;
-                min-height: 1.5em;
-            }
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 10px;
-                width: 45%;
-                padding-right: 10px;
-                font-weight: bold;
-                text-align: left;
-            }
+            thead { display: none; }
+            table, tbody, tr, td { display: block; width: 100%; }
+            tr { margin-bottom: 15px; border: 1px solid #ddd; }
+            td { text-align: right; position: relative; padding-left: 50%; min-height: 1.5em; }
+            td::before { content: attr(data-label); position: absolute; left: 10px; width: 45%; padding-right: 10px; font-weight: bold; text-align: left; }
         }
     </style>
 </head>
@@ -110,10 +43,11 @@
         <thead>
             <tr>
                 <th data-column="0" data-order="asc">番号</th>
-                <th data-column="1" data-order="asc">価格</th>
-                <th data-column="2" data-order="asc">BBQの有無</th>
-                <th data-column="3" data-order="asc">ジャンル</th>
-                <th data-column="4" data-order="asc">チェックアウト時間</th>
+                <th data-column="1" data-order="asc">合計金額</th>
+                <th>基本料金</th>
+                <th>税・手数料</th>
+                <th data-column="4" data-order="asc">BBQの有無</th>
+                <th data-column="5" data-order="asc">ジャンル</th>
                 <th>場所、詳細</th>
                 <th>URL</th>
             </tr>
@@ -121,55 +55,61 @@
         <tbody>
             <tr>
                 <td data-label="番号">①</td>
-                <td data-label="価格">￥38,850＋税・手数料（￥18,000）</td>
+                <td data-label="合計金額"></td>
+                <td data-label="基本料金">￥38,850</td>
+                <td data-label="税・手数料">￥18,000</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">海</td>
-                <td data-label="チェックアウト時間">11時</td>
                 <td data-label="場所、詳細">〒299-2402 千葉県, 南房総市, 富浦町豊岡 字坂ノ下897</td>
                 <td data-label="URL"><a href="https://share.google/fWC1PCEee3gvZSuuS" target="_blank">リンクを開く</a></td>
             </tr>
             <tr>
                 <td data-label="番号">②</td>
-                <td data-label="価格">47,712＋税・手数料（￥8,800）</td>
+                <td data-label="合計金額"></td>
+                <td data-label="基本料金">￥47,712</td>
+                <td data-label="税・手数料">￥8,800</td>
                 <td data-label="BBQの有無">あり</td>
                 <td data-label="ジャンル">海</td>
-                <td data-label="チェックアウト時間">11時</td>
                 <td data-label="場所、詳細">〒311-2212 茨城県, 鹿嶋市, 角折 1506-35</td>
                 <td data-label="URL"><a href="https://share.google/GKVRE0Gd9azwHmF2Z" target="_blank">リンクを開く</a></td>
             </tr>
             <tr>
                 <td data-label="番号">③</td>
-                <td data-label="価格">￥46,656 税・手数料込</td>
+                <td data-label="合計金額"></td>
+                <td data-label="基本料金">￥46,656</td>
+                <td data-label="税・手数料">￥0</td>
                 <td data-label="BBQの有無">あり（有料）</td>
                 <td data-label="ジャンル">川？</td>
-                <td data-label="チェックアウト時間">11時</td>
                 <td data-label="場所、詳細">〒307-0001 茨城県, 結城市, 結城１６２−１ HOTEL(TEN)</td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-8yd1RY" target="_blank">リンクを開く</a></td>
             </tr>
              <tr>
                 <td data-label="番号">④</td>
-                <td data-label="価格">￥62,400＋税・手数料（￥9,000）</td>
+                <td data-label="合計金額"></td>
+                <td data-label="基本料金">￥62,400</td>
+                <td data-label="税・手数料">￥9,000</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">海</td>
-                 <td data-label="チェックアウト時間">10時</td>
                 <td data-label="場所、詳細">〒283-0114 千葉県, Kujukuri, 千葉県山武郡九十九里町真亀4908-207</td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-7eelzxy" target="_blank">リンクを開く</a></td>
             </tr>
              <tr>
                 <td data-label="番号">⑤</td>
-                <td data-label="価格">￥55,500税・手数料込</td>
+                <td data-label="合計金額"></td>
+                <td data-label="基本料金">￥55,500</td>
+                <td data-label="税・手数料">￥0</td>
                 <td data-label="BBQの有無">あり（有料）</td>
                 <td data-label="ジャンル">山</td>
-                 <td data-label="チェックアウト時間">10時</td>
                 <td data-label="場所、詳細">〒321-1261 栃木県, 日光市, 今市1078-4</td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-3rY6LI" target="_blank">リンクを開く</a></td>
             </tr>
             <tr>
                 <td data-label="番号">副候補</td>
-                <td data-label="価格">￥24,650税・手数料込</td>
+                <td data-label="合計金額"></td>
+                <td data-label="基本料金">￥24,650</td>
+                <td data-label="税・手数料">￥0</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">山or川</td>
-                <td data-label="チェックアウト時間">10時</td>
                 <td data-label="場所、詳細">〒329-4305 栃木県, 栃木市, 栃木市岩舟町静戸１２５２</td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-NJ2FJ0P" target="_blank">リンクを開く</a></td>
             </tr>
@@ -179,7 +119,31 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 並べ替え機能 ---
+
+    // --- 【追加】合計金額の自動計算機能 ---
+    const calculateTotals = () => {
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            // 各セルを取得
+            const totalCell = row.querySelector('[data-label="合計金額"]');
+            const basePriceCell = row.querySelector('[data-label="基本料金"]');
+            const feeCell = row.querySelector('[data-label="税・手数料"]');
+
+            if (!totalCell || !basePriceCell || !feeCell) return;
+
+            // セルから数値のみを抽出 (数値がない場合は0とする)
+            const basePrice = parseInt(basePriceCell.textContent.replace(/[^0-9]/g, ''), 10) || 0;
+            const fee = parseInt(feeCell.textContent.replace(/[^0-9]/g, ''), 10) || 0;
+
+            // 合計を計算
+            const total = basePrice + fee;
+
+            // 合計金額のセルに、見やすい形式で結果を表示
+            totalCell.textContent = `￥${total.toLocaleString()}`;
+        });
+    };
+
+    // --- 並べ替え機能（合計金額でソートするように修正） ---
     const sortableHeaders = document.querySelectorAll('th[data-column]');
     sortableHeaders.forEach(header => {
         header.addEventListener('click', () => {
@@ -195,14 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
             rows.sort((rowA, rowB) => {
                 const cellA_td = rowA.querySelectorAll('td')[columnIndex];
                 const cellB_td = rowB.querySelectorAll('td')[columnIndex];
-                
-                // セルが存在しない場合は比較しない
                 if (!cellA_td || !cellB_td) return 0;
 
                 const cellA = cellA_td.textContent.trim();
                 const cellB = cellB_td.textContent.trim();
 
-                if (columnIndex === 1) { // 価格列
+                // 合計金額列(インデックス1)の場合は、数値として比較
+                if (columnIndex === 1) {
                     const numA = parseInt(cellA.replace(/[^0-9]/g, ''), 10) || 0;
                     const numB = parseInt(cellB.replace(/[^0-9]/g, ''), 10) || 0;
                     return newOrder === 'asc' ? numA - numB : numB - numA;
@@ -215,41 +178,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 【追加】絞り込み機能 ---
+    // --- 絞り込み機能 ---
     const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
     const tableRows = document.querySelectorAll('tbody tr');
-
     const applyFilters = () => {
-        // 現在チェックされているフィルターの条件を配列で取得
         const activeFilters = Array.from(filterCheckboxes)
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value);
 
-        // 表の各行に対して処理
         tableRows.forEach(row => {
             let showRow = true;
-            const bbqCell = row.querySelector('[data-label="BBQの有無"]').textContent;
-            const genreCell = row.querySelector('[data-label="ジャンル"]').textContent;
+            const bbqCell = row.querySelector('[data-label="BBQの有無"]');
+            const genreCell = row.querySelector('[data-label="ジャンル"]');
 
-            // もしアクティブなフィルターがあれば、条件に合うかチェック
             if (activeFilters.length > 0) {
-                // すべての条件に一致するかどうか
                 showRow = activeFilters.every(filter => {
-                    if (filter === 'あり') return bbqCell.includes('あり');
-                    // "山or川" のような場合も考慮して、ジャンルが含まれるかで判断
-                    return genreCell.includes(filter);
+                    if (filter === 'あり') return bbqCell && bbqCell.textContent.includes('あり');
+                    return genreCell && genreCell.textContent.includes(filter);
                 });
             }
-            
-            // 行を表示するかどうかを決定
             row.style.display = showRow ? '' : 'none';
         });
     };
-
-    // 各チェックボックスがクリックされたら、絞り込み処理を実行
     filterCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', applyFilters);
     });
+
+    // --- 最初にページが読み込まれたら、まず合計金額を計算する ---
+    calculateTotals();
 });
 </script>
 
