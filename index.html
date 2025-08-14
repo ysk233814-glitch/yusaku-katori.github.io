@@ -2,26 +2,26 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>製品比較表</title>
+    <title>宿泊先 比較表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* ページ全体の基本設定 */
         body {
             font-family: sans-serif;
-            margin: 0; /* スマホ表示のために余白を0に */
+            margin: 0;
             background-color: #f9f9f9;
         }
         .container {
-            padding: 15px; /* コンテンツ全体の余白 */
+            padding: 15px;
         }
         h1 {
             text-align: center;
-            font-size: 1.5em; /* 見出しサイズを調整 */
+            font-size: 1.5em;
         }
         
         /* 表のデザイン */
         table {
-            width: 100%; /* 横幅を100%に */
+            width: 100%;
             border-collapse: collapse;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
@@ -35,6 +35,13 @@
             color: white;
             text-align: center;
         }
+        /* 並べ替え可能なヘッダーのスタイル */
+        th[data-column] {
+            cursor: pointer;
+        }
+        th[data-column]:hover {
+            background-color: #0056b3;
+        }
         tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
@@ -43,37 +50,27 @@
             font-weight: bold;
         }
 
-        /* --- ここからがスマホ対応の核！ --- */
-        /* 画面の横幅が768px以下の時に適用されるCSS */
+        /* スマホ対応 */
         @media screen and (max-width: 768px) {
-            
-            /* PC用のヘッダーを非表示に */
             thead {
                 display: none;
             }
-
-            /* table, tbody, tr, tdをブロック要素として表示 */
             table, tbody, tr, td {
                 display: block;
                 width: 100%;
             }
-
-            /* 各行（tr）をカードのように見せる */
             tr {
                 margin-bottom: 15px;
                 border: 1px solid #ddd;
             }
-
-            /* tdの左側に、非表示にしたヘッダーのテキストを表示する */
             td {
-                text-align: right; /* テキストを右寄せに */
+                text-align: right;
                 position: relative;
-                padding-left: 50%; /* 左側にラベル用のスペースを確保 */
-                min-height: 1.5em; /* セルの最小高さを確保 */
+                padding-left: 50%;
+                min-height: 1.5em;
             }
-
             td::before {
-                content: attr(data-label); /* data-label属性の内容を表示 */
+                content: attr(data-label);
                 position: absolute;
                 left: 10px;
                 width: 45%;
@@ -88,13 +85,14 @@
 
 <div class="container">
     <h1>宿泊先 比較表</h1>
+    <p style="text-align:center; color:#555;">（ヘッダーをクリックして並べ替えできます）</p>
 
     <table>
         <thead>
             <tr>
-                <th>番号</th>
-                <th>価格</th>
-                <th>BBQの有無</th>
+                <th data-column="0" data-order="asc">番号</th>
+                <th data-column="1" data-order="asc">価格</th>
+                <th data-column="2" data-order="asc">BBQの有無</th>
                 <th>ジャンル</th>
                 <th>チェックアウト時間</th>
                 <th>場所、詳細</th>
@@ -159,6 +157,42 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sortableHeaders = document.querySelectorAll('th[data-column]');
+
+        sortableHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const tableBody = header.closest('table').querySelector('tbody');
+                const rows = Array.from(tableBody.querySelectorAll('tr'));
+                const columnIndex = parseInt(header.dataset.column, 10);
+                const currentOrder = header.dataset.order;
+                const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+                
+                // 他のヘッダーの並び順をリセット
+                sortableHeaders.forEach(h => h.dataset.order = 'asc');
+                header.dataset.order = newOrder;
+
+                rows.sort((rowA, rowB) => {
+                    const cellA = rowA.querySelectorAll('td')[columnIndex].textContent.trim();
+                    const cellB = rowB.querySelectorAll('td')[columnIndex].textContent.trim();
+
+                    if (columnIndex === 1) { // 価格列の処理
+                        const numA = parseInt(cellA.replace(/[^0-9]/g, ''), 10) || 0;
+                        const numB = parseInt(cellB.replace(/[^0-9]/g, ''), 10) || 0;
+                        return newOrder === 'asc' ? numA - numB : numB - numA;
+                    }
+                    
+                    // その他の列は文字列として比較
+                    return newOrder === 'asc' ? cellA.localeCompare(cellB, 'ja') : cellB.localeCompare(cellA, 'ja');
+                });
+
+                tableBody.append(...rows);
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
