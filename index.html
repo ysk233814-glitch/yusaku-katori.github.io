@@ -18,7 +18,22 @@
             text-align: center;
             font-size: 1.5em;
         }
-        
+        /* 絞り込みフィルターのスタイル */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .filters label {
+            cursor: pointer;
+            font-size: 0.9em;
+        }
         /* 表のデザイン */
         table {
             width: 100%;
@@ -35,7 +50,6 @@
             color: white;
             text-align: center;
         }
-        /* 並べ替え可能なヘッダーのスタイル */
         th[data-column] {
             cursor: pointer;
         }
@@ -49,7 +63,6 @@
             color: #007bff;
             font-weight: bold;
         }
-
         /* スマホ対応 */
         @media screen and (max-width: 768px) {
             thead {
@@ -85,7 +98,13 @@
 
 <div class="container">
     <h1>宿泊先 比較表</h1>
-    <p style="text-align:center; color:#555;">（ヘッダーをクリックして並べ替えできます）</p>
+
+    <div class="filters">
+        <label><input type="checkbox" class="filter-checkbox" value="あり"> BBQあり</label>
+        <label><input type="checkbox" class="filter-checkbox" value="海"> 海</label>
+        <label><input type="checkbox" class="filter-checkbox" value="山"> 山</label>
+        <label><input type="checkbox" class="filter-checkbox" value="川"> 川</label>
+    </div>
 
     <table>
         <thead>
@@ -93,8 +112,8 @@
                 <th data-column="0" data-order="asc">番号</th>
                 <th data-column="1" data-order="asc">価格</th>
                 <th data-column="2" data-order="asc">BBQの有無</th>
-                <th>ジャンル</th>
-                <th>チェックアウト時間</th>
+                <th data-column="3" data-order="asc">ジャンル</th>
+                <th data-column="4" data-order="asc">チェックアウト時間</th>
                 <th>場所、詳細</th>
                 <th>URL</th>
             </tr>
@@ -102,7 +121,7 @@
         <tbody>
             <tr>
                 <td data-label="番号">①</td>
-                <td data-label="価格">56,850円</td>
+                <td data-label="価格">￥38,850＋税・手数料（￥18,000）</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">海</td>
                 <td data-label="チェックアウト時間">11時</td>
@@ -111,7 +130,7 @@
             </tr>
             <tr>
                 <td data-label="番号">②</td>
-                <td data-label="価格">56,512円</td>
+                <td data-label="価格">47,712＋税・手数料（￥8,800）</td>
                 <td data-label="BBQの有無">あり</td>
                 <td data-label="ジャンル">海</td>
                 <td data-label="チェックアウト時間">11時</td>
@@ -120,7 +139,7 @@
             </tr>
             <tr>
                 <td data-label="番号">③</td>
-                <td data-label="価格">46,656円</td>
+                <td data-label="価格">￥46,656 税・手数料込</td>
                 <td data-label="BBQの有無">あり（有料）</td>
                 <td data-label="ジャンル">川？</td>
                 <td data-label="チェックアウト時間">11時</td>
@@ -129,7 +148,7 @@
             </tr>
              <tr>
                 <td data-label="番号">④</td>
-                <td data-label="価格">71,400円</td>
+                <td data-label="価格">￥62,400＋税・手数料（￥9,000）</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">海</td>
                  <td data-label="チェックアウト時間">10時</td>
@@ -138,7 +157,7 @@
             </tr>
              <tr>
                 <td data-label="番号">⑤</td>
-                <td data-label="価格">55,500円</td>
+                <td data-label="価格">￥55,500税・手数料込</td>
                 <td data-label="BBQの有無">あり（有料）</td>
                 <td data-label="ジャンル">山</td>
                  <td data-label="チェックアウト時間">10時</td>
@@ -147,7 +166,7 @@
             </tr>
             <tr>
                 <td data-label="番号">副候補</td>
-                <td data-label="価格">24,650円</td>
+                <td data-label="価格">￥24,650税・手数料込</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">山or川</td>
                 <td data-label="チェックアウト時間">10時</td>
@@ -159,41 +178,80 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const sortableHeaders = document.querySelectorAll('th[data-column]');
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 並べ替え機能 ---
+    const sortableHeaders = document.querySelectorAll('th[data-column]');
+    sortableHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const tableBody = header.closest('table').querySelector('tbody');
+            const rows = Array.from(tableBody.querySelectorAll('tr'));
+            const columnIndex = parseInt(header.dataset.column, 10);
+            const currentOrder = header.dataset.order;
+            const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+            
+            sortableHeaders.forEach(h => h.dataset.order = 'asc');
+            header.dataset.order = newOrder;
 
-        sortableHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const tableBody = header.closest('table').querySelector('tbody');
-                const rows = Array.from(tableBody.querySelectorAll('tr'));
-                const columnIndex = parseInt(header.dataset.column, 10);
-                const currentOrder = header.dataset.order;
-                const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+            rows.sort((rowA, rowB) => {
+                const cellA_td = rowA.querySelectorAll('td')[columnIndex];
+                const cellB_td = rowB.querySelectorAll('td')[columnIndex];
                 
-                // 他のヘッダーの並び順をリセット
-                sortableHeaders.forEach(h => h.dataset.order = 'asc');
-                header.dataset.order = newOrder;
+                // セルが存在しない場合は比較しない
+                if (!cellA_td || !cellB_td) return 0;
 
-                rows.sort((rowA, rowB) => {
-                    const cellA = rowA.querySelectorAll('td')[columnIndex].textContent.trim();
-                    const cellB = rowB.querySelectorAll('td')[columnIndex].textContent.trim();
+                const cellA = cellA_td.textContent.trim();
+                const cellB = cellB_td.textContent.trim();
 
-                    if (columnIndex === 1) { // 価格列の処理
-                        const numA = parseInt(cellA.replace(/[^0-9]/g, ''), 10) || 0;
-                        const numB = parseInt(cellB.replace(/[^0-9]/g, ''), 10) || 0;
-                        return newOrder === 'asc' ? numA - numB : numB - numA;
-                    }
-                    
-                    // その他の列は文字列として比較
-                    return newOrder === 'asc' ? cellA.localeCompare(cellB, 'ja') : cellB.localeCompare(cellA, 'ja');
-                });
-
-                tableBody.append(...rows);
+                if (columnIndex === 1) { // 価格列
+                    const numA = parseInt(cellA.replace(/[^0-9]/g, ''), 10) || 0;
+                    const numB = parseInt(cellB.replace(/[^0-9]/g, ''), 10) || 0;
+                    return newOrder === 'asc' ? numA - numB : numB - numA;
+                }
+                
+                return newOrder === 'asc' ? cellA.localeCompare(cellB, 'ja') : cellB.localeCompare(cellA, 'ja');
             });
+
+            tableBody.append(...rows);
         });
     });
+
+    // --- 【追加】絞り込み機能 ---
+    const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+    const tableRows = document.querySelectorAll('tbody tr');
+
+    const applyFilters = () => {
+        // 現在チェックされているフィルターの条件を配列で取得
+        const activeFilters = Array.from(filterCheckboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
+
+        // 表の各行に対して処理
+        tableRows.forEach(row => {
+            let showRow = true;
+            const bbqCell = row.querySelector('[data-label="BBQの有無"]').textContent;
+            const genreCell = row.querySelector('[data-label="ジャンル"]').textContent;
+
+            // もしアクティブなフィルターがあれば、条件に合うかチェック
+            if (activeFilters.length > 0) {
+                // すべての条件に一致するかどうか
+                showRow = activeFilters.every(filter => {
+                    if (filter === 'あり') return bbqCell.includes('あり');
+                    // "山or川" のような場合も考慮して、ジャンルが含まれるかで判断
+                    return genreCell.includes(filter);
+                });
+            }
+            
+            // 行を表示するかどうかを決定
+            row.style.display = showRow ? '' : 'none';
+        });
+    };
+
+    // 各チェックボックスがクリックされたら、絞り込み処理を実行
+    filterCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', applyFilters);
+    });
+});
 </script>
 
 </body>
 </html>
-
