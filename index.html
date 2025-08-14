@@ -18,6 +18,11 @@
         th[data-column]:hover { background-color: #0056b3; }
         tbody tr:nth-child(even) { background-color: #f2f2f2; }
         a { color: #007bff; font-weight: bold; }
+        /* 【追加】地図リンクのスタイル */
+        td[data-label="場所、詳細"] a {
+            text-decoration: underline;
+            font-weight: normal;
+        }
         @media screen and (max-width: 768px) {
             thead { display: none; }
             table, tbody, tr, td { display: block; width: 100%; }
@@ -60,7 +65,7 @@
                 <td data-label="税・手数料">￥18,000</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">海</td>
-                <td data-label="場所、詳細">〒299-2402 千葉県, 南房総市, 富浦町豊岡 字坂ノ下897</td>
+                <td data-label="場所、詳細"><a href="https://www.google.com/maps/search/?api=1&query=〒299-2402 千葉県南房総市富浦町豊岡字坂ノ下897" target="_blank">〒299-2402 千葉県, 南房総市, 富浦町豊岡 字坂ノ下897</a></td>
                 <td data-label="URL"><a href="https://share.google/fWC1PCEee3gvZSuuS" target="_blank">リンクを開く</a></td>
             </tr>
             <tr>
@@ -70,7 +75,7 @@
                 <td data-label="税・手数料">￥8,800</td>
                 <td data-label="BBQの有無">あり</td>
                 <td data-label="ジャンル">海</td>
-                <td data-label="場所、詳細">〒311-2212 茨城県, 鹿嶋市, 角折 1506-35</td>
+                <td data-label="場所、詳細"><a href="https://www.google.com/maps/search/?api=1&query=〒311-2212 茨城県鹿嶋市角折1506-35" target="_blank">〒311-2212 茨城県, 鹿嶋市, 角折 1506-35</a></td>
                 <td data-label="URL"><a href="https://share.google/GKVRE0Gd9azwHmF2Z" target="_blank">リンクを開く</a></td>
             </tr>
             <tr>
@@ -80,7 +85,7 @@
                 <td data-label="税・手数料">￥0</td>
                 <td data-label="BBQの有無">あり（有料）</td>
                 <td data-label="ジャンル">川？</td>
-                <td data-label="場所、詳細">〒307-0001 茨城県, 結城市, 結城１６２−１ HOTEL(TEN)</td>
+                <td data-label="場所、詳細"><a href="https://www.google.com/maps/search/?api=1&query=〒307-0001 茨城県結城市結城１６２−１ HOTEL(TEN)" target="_blank">〒307-0001 茨城県, 結城市, 結城１６２−１ HOTEL(TEN)</a></td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-8yd1RY" target="_blank">リンクを開く</a></td>
             </tr>
              <tr>
@@ -90,7 +95,7 @@
                 <td data-label="税・手数料">￥9,000</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">海</td>
-                <td data-label="場所、詳細">〒283-0114 千葉県, Kujukuri, 千葉県山武郡九十九里町真亀4908-207</td>
+                <td data-label="場所、詳細"><a href="https://www.google.com/maps/search/?api=1&query=〒283-0114 千葉県山武郡九十九里町真亀4908-207" target="_blank">〒283-0114 千葉県, Kujukuri, 千葉県山武郡九十九里町真亀4908-207</a></td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-7eelzxy" target="_blank">リンクを開く</a></td>
             </tr>
              <tr>
@@ -100,7 +105,7 @@
                 <td data-label="税・手数料">￥0</td>
                 <td data-label="BBQの有無">あり（有料）</td>
                 <td data-label="ジャンル">山</td>
-                <td data-label="場所、詳細">〒321-1261 栃木県, 日光市, 今市1078-4</td>
+                <td data-label="場所、詳細"><a href="https://www.google.com/maps/search/?api=1&query=〒321-1261 栃木県日光市今市1078-4" target="_blank">〒321-1261 栃木県, 日光市, 今市1078-4</a></td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-3rY6LI" target="_blank">リンクを開く</a></td>
             </tr>
             <tr>
@@ -110,7 +115,7 @@
                 <td data-label="税・手数料">￥0</td>
                 <td data-label="BBQの有無">なし</td>
                 <td data-label="ジャンル">山or川</td>
-                <td data-label="場所、詳細">〒329-4305 栃木県, 栃木市, 栃木市岩舟町静戸１２５２</td>
+                <td data-label="場所、詳細"><a href="https://www.google.com/maps/search/?api=1&query=〒329-4305 栃木県栃木市岩舟町静戸１２５２" target="_blank">〒329-4305 栃木県, 栃木市, 栃木市岩舟町静戸１２５２</a></td>
                 <td data-label="URL"><a href="https://www.booking.com/Share-NJ2FJ0P" target="_blank">リンクを開く</a></td>
             </tr>
         </tbody>
@@ -120,30 +125,22 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 【追加】合計金額の自動計算機能 ---
+    // --- 合計金額の自動計算機能 ---
     const calculateTotals = () => {
         const rows = document.querySelectorAll('tbody tr');
         rows.forEach(row => {
-            // 各セルを取得
             const totalCell = row.querySelector('[data-label="合計金額"]');
             const basePriceCell = row.querySelector('[data-label="基本料金"]');
             const feeCell = row.querySelector('[data-label="税・手数料"]');
-
             if (!totalCell || !basePriceCell || !feeCell) return;
-
-            // セルから数値のみを抽出 (数値がない場合は0とする)
             const basePrice = parseInt(basePriceCell.textContent.replace(/[^0-9]/g, ''), 10) || 0;
             const fee = parseInt(feeCell.textContent.replace(/[^0-9]/g, ''), 10) || 0;
-
-            // 合計を計算
             const total = basePrice + fee;
-
-            // 合計金額のセルに、見やすい形式で結果を表示
             totalCell.textContent = `￥${total.toLocaleString()}`;
         });
     };
 
-    // --- 並べ替え機能（合計金額でソートするように修正） ---
+    // --- 並べ替え機能 ---
     const sortableHeaders = document.querySelectorAll('th[data-column]');
     sortableHeaders.forEach(header => {
         header.addEventListener('click', () => {
@@ -152,28 +149,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const columnIndex = parseInt(header.dataset.column, 10);
             const currentOrder = header.dataset.order;
             const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
-            
             sortableHeaders.forEach(h => h.dataset.order = 'asc');
             header.dataset.order = newOrder;
-
             rows.sort((rowA, rowB) => {
                 const cellA_td = rowA.querySelectorAll('td')[columnIndex];
                 const cellB_td = rowB.querySelectorAll('td')[columnIndex];
                 if (!cellA_td || !cellB_td) return 0;
-
                 const cellA = cellA_td.textContent.trim();
                 const cellB = cellB_td.textContent.trim();
-
-                // 合計金額列(インデックス1)の場合は、数値として比較
-                if (columnIndex === 1) {
+                if (columnIndex === 1) { // 合計金額列
                     const numA = parseInt(cellA.replace(/[^0-9]/g, ''), 10) || 0;
                     const numB = parseInt(cellB.replace(/[^0-9]/g, ''), 10) || 0;
                     return newOrder === 'asc' ? numA - numB : numB - numA;
                 }
-                
                 return newOrder === 'asc' ? cellA.localeCompare(cellB, 'ja') : cellB.localeCompare(cellA, 'ja');
             });
-
             tableBody.append(...rows);
         });
     });
@@ -185,12 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeFilters = Array.from(filterCheckboxes)
             .filter(checkbox => checkbox.checked)
             .map(checkbox => checkbox.value);
-
         tableRows.forEach(row => {
             let showRow = true;
             const bbqCell = row.querySelector('[data-label="BBQの有無"]');
             const genreCell = row.querySelector('[data-label="ジャンル"]');
-
             if (activeFilters.length > 0) {
                 showRow = activeFilters.every(filter => {
                     if (filter === 'あり') return bbqCell && bbqCell.textContent.includes('あり');
@@ -204,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.addEventListener('change', applyFilters);
     });
 
-    // --- 最初にページが読み込まれたら、まず合計金額を計算する ---
+    // --- ページ読み込み時に初期化 ---
     calculateTotals();
 });
 </script>
